@@ -1,0 +1,6 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Color x:Key="errorRed">#FF1040</Color>
+    <StaticResource x:Key="ErrorRedColor" ResourceKey="errorRed"/>
+    <SolidColorBrush x:Key="TextFillErrorBrush" Color="{DynamicResource ErrorRedColor}"/>
+</ResourceDictionary>
