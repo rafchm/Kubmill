@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:k8="clr-namespace:Kubmill.Models.Kubernetes"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:i="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors"
     x:Class="Kubmill.Views.Pages.HomePage"
     mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800"
     Title="HomePage">
@@ -15,19 +15,19 @@
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type k8:K8Context}">
                     <ui:CardExpander Icon="Organization24" Margin="0,8,0,0" Cursor="Hand">
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="Expanded">
-                                <b:InvokeCommandAction Command="{Binding DataContext.ViewModel.LoadContextDetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Expanded">
+                                <i:InvokeCommandAction Command="{Binding DataContext.ViewModel.LoadContextDetailsCommand, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
                                                        CommandParameter="{Binding}"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                         <ui:CardExpander.Header>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="20px"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
