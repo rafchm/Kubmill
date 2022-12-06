@@ -18,6 +18,8 @@ namespace Kubmill.Repositories
         {
             var files = Directory.GetFiles("./scripts", "*.ps1", SearchOption.AllDirectories);
 
+            _scripts.Clear();
+
             foreach (var file in files)
             {
                 var script = new ScriptFile(file);

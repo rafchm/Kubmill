@@ -94,42 +94,23 @@ namespace Kubmill.ViewModels
 
             if (ctx == null || ns == null) return;
 
-            await GetEvents(ctx, ns);
-            await GetDeploymentStats(ctx, ns);
-            await GetPodStats(ctx, ns);
-            await GetReplicaSetStats(ctx, ns);
-        }
-
-        private async Task GetEvents(string ctx, string ns)
-        {
             var events = await _kubService.GetEvents(ctx, ns, cts?.Token);
-            Events = events
-                .Where(e => !ErrorsOnly || e.IsError)
-                .OrderByDescending(e => e.Timestamp);
-        }
-
-        private async Task GetDeploymentStats(string ctx, string ns)
-        {
             var deployments = await _kubService.GetDeployments(ctx, ns, cts?.Token);
+            var pods = await _kubService.GetPods(ctx, ns, cts?.Token);
+            var replicas = await _kubService.GetReplicaSets(ctx, ns, cts?.Token);
 
             DeploymentCurrent = deployments.Count(d => d.Ready == d.Desired);
             DeploymentTotal = deployments.Count();
-        }
-
-        private async Task GetPodStats(string ctx, string ns)
-        {
-            var pods = await _kubService.GetPods(ctx, ns, cts?.Token);
 
             PodCurrent = pods.Count(p => p.IsReady);
             PodTotal = pods.Count();
-        }
-
-        private async Task GetReplicaSetStats(string ctx, string ns)
-        {
-            var replicas = await _kubService.GetReplicaSets(ctx, ns, cts?.Token);
 
             ReplicaSetCurrent = replicas.Count(r => (r.Ready ?? 0) == r.Replicas);
             ReplicaSetTotal = replicas.Count();
+
+            Events = events
+                .Where(e => !ErrorsOnly || e.IsError)
+                .OrderByDescending(e => e.Timestamp);
         }
     }
 }

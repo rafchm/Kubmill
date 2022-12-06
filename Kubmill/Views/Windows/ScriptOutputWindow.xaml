@@ -16,7 +16,7 @@
             <RowDefinition Height="52"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Border Padding="4">
+        <Border>
             <Menu>
                 <MenuItem Header="_Copy" Command="{Binding ViewModel.CopyCommand}">
                     <MenuItem.Icon>

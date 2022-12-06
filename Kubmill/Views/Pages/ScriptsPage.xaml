@@ -8,65 +8,78 @@
     x:Class="Kubmill.Views.Pages.ScriptsPage"
     mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800"
     Title="HomePage">
-    <ScrollViewer>
-        <ItemsControl Grid.Row="0" ItemsSource="{Binding ViewModel.Scripts, Mode=OneWay}" Focusable="False"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Menu>
+            <MenuItem Header="_Refresh" Command="{Binding ViewModel.RefreshCommand}">
+                <MenuItem.Icon>
+                    <ui:SymbolIcon Filled="True" Symbol="ArrowClockwise24" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </Menu>
+        <ScrollViewer Grid.Row="1">
+            <ItemsControl Grid.Row="0" ItemsSource="{Binding ViewModel.Scripts, Mode=OneWay}" Focusable="False"
                  Foreground="{DynamicResource TextFillColorSecondaryBrush}" d:ItemsSource="{d:SampleData ItemCount=3}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type km:ScriptFile}">
-                    <ui:CardExpander Icon="DocumentCatchUp24" Margin="0,8,0,0" Cursor="Hand" IsExpanded="True">
-                        <ui:CardExpander.Header>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="20px"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <StackPanel>
-                                    <TextBlock Margin="0,0,10,0" FontWeight="Bold" Text="{Binding Name}"/>
-                                    <TextBlock FontStyle="Italic" Text="{Binding Description}"/>
-                                </StackPanel>
-                                <ui:Button Height="26" Margin="0" Padding="4,0,8,0" Icon="DocumentEdit24" Grid.Column="1"
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type km:ScriptFile}">
+                        <ui:CardExpander Icon="DocumentCatchUp24" Margin="0,8,0,0" Cursor="Hand" IsExpanded="True">
+                            <ui:CardExpander.Header>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="20px"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel>
+                                        <TextBlock Margin="0,0,10,0" FontWeight="Bold" Text="{Binding Name}"/>
+                                        <TextBlock FontStyle="Italic" Text="{Binding Description}"/>
+                                    </StackPanel>
+                                    <ui:Button Height="26" Margin="0" Padding="4,0,8,0" Icon="DocumentEdit24" Grid.Column="1"
                                            Content="Edit" HorizontalAlignment="Right"
                                            Command="{Binding DataContext.ViewModel.EditScriptCommand, RelativeSource={RelativeSource AncestorType={x:Type Page}}}"
                                            CommandParameter="{Binding}"/>
-                                <ui:ToggleSwitch Grid.Column="3" ToolTip="Adds verbosity" IsChecked="{Binding IsDebugMode}">Debug mode</ui:ToggleSwitch>
-                            </Grid>
-                        </ui:CardExpander.Header>
-                        <Grid>
-                            <StackPanel>
-                                <ItemsControl ItemsSource="{Binding Parameters, Mode=OneWay}" BorderThickness="0"
+                                    <ui:ToggleSwitch Grid.Column="3" ToolTip="Adds verbosity" IsChecked="{Binding IsDebugMode}">Debug mode</ui:ToggleSwitch>
+                                </Grid>
+                            </ui:CardExpander.Header>
+                            <Grid>
+                                <StackPanel>
+                                    <ItemsControl ItemsSource="{Binding Parameters, Mode=OneWay}" BorderThickness="0"
                                               Background="Transparent" HorizontalAlignment="Stretch">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <WrapPanel/>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <ui:Badge Margin="0,0,8,8" Padding="4,0,8,0" Height="24" Appearance="Info" Content="{Binding Name}"/>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                                <ItemsControl ItemsSource="{Binding Errors}" Background="Transparent" HorizontalAlignment="Stretch">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <ui:SymbolIcon Symbol="ErrorCircle24" Foreground="{StaticResource TextFillErrorBrush}"/>
-                                                <TextBlock Text="{Binding}" Foreground="{StaticResource TextFillErrorBrush}" FontSize="12" Margin="6,0,0,0"/>
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
-                        </Grid>
-                    </ui:CardExpander>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </ScrollViewer>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <ui:Badge Margin="0,0,8,8" Padding="4,0,8,0" Height="24" Appearance="Info" Content="{Binding Name}"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <ItemsControl ItemsSource="{Binding Errors}" Background="Transparent" HorizontalAlignment="Stretch">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <ui:SymbolIcon Symbol="ErrorCircle24" Foreground="{StaticResource TextFillErrorBrush}"/>
+                                                    <TextBlock Text="{Binding}" Foreground="{StaticResource TextFillErrorBrush}" FontSize="12" Margin="6,0,0,0"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Grid>
+                        </ui:CardExpander>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
 </ui:UiPage>
